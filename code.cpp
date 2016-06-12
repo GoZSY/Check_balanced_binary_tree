@@ -27,3 +27,43 @@ public:
         return true;
     }
 };
+/**************************************************************************
+ * 先实现一个求树高的函数，然后遍历整个树，分别求每个节点的左右子树是否满足条件
+ * ************************************************************************/
+ class Solution {
+public:
+    bool IsBalanced_Solution(TreeNode* pRoot)
+    {
+		if(pRoot== NULL)
+            return true;
+        int left = 0;
+        int right = 0;
+        if(pRoot->left)
+            left = depth(pRoot->left);
+        if(pRoot->right)
+            right = depth(pRoot->right);
+        int temp = 0;
+        if(left>right)
+            temp = left-right;
+        else
+            temp = right-left;
+        bool flag = false;
+        if(temp < 2)
+            flag = true;
+        return flag&&IsBalanced_Solution(pRoot->left)&&IsBalanced_Solution(pRoot->right);
+    }
+private:
+    int depth(TreeNode *pRoot)
+    {
+        if(pRoot == NULL)
+            return 0;
+        int left = 0;
+        int right = 0;
+        if(pRoot->left)
+            left = depth(pRoot->left);
+        if(pRoot->right)
+            right = depth(pRoot->right);
+        
+        return (left > right)?(left+1):(right+1);
+    }
+};
